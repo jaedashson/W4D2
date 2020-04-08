@@ -1,15 +1,23 @@
 require_relative "piece.rb"
+require_relative "null_piece.rb"
 
 class Board
 
-    attr_reader :rows
+    attr_reader :rows, :sentinel
 
     def initialize
-        @rows = Array.new(8) { Array.new(8, nil)}
-        @sentinel = nil
+        @rows = Array.new(8) { Array.new(8, nil) }
+        @sentinel = NullPiece.instance
+
         [0, 1, 6, 7].each do |row|
             (0..7).each do |col|
                 @rows[row][col] = Piece.new
+            end
+        end
+
+        (2..5).each do |row|
+            (0..7).each do |col|
+                @rows[row][col] = @sentinel
             end
         end
     end
@@ -27,14 +35,14 @@ class Board
     def move_piece(start_pos, end_pos)
         raise "invalid position" if !valid_pos?(start_pos) || !valid_pos?(end_pos)
 
-        raise "there is no piece there" if self[start_pos] == nil # TypeError: no implicit conversion of Array into Integer
+        raise "there is no piece there" if self[start_pos] == sentinel
 
         piece = self[start_pos]
 
         # raise "cannot move there" unless piece.valid_moves.include?(end_pos)
 
-        @rows[start_pos] = nil
-        add_piece(end_pos)
+        self[start_pos] = sentinel
+        add_piece(piece, end_pos)
     end
     
     def [](pos)
@@ -49,14 +57,14 @@ class Board
 
 end
 
-b1 = Board.new
+# b1 = Board.new
 
 # p b1.rows[4][0]
 
-p b1[[0, 0]] # => piece
-p b1[[4, 4]] # => nil
+# p b1[[0, 0]] # => piece
+# p b1[[4, 4]] # => nil
 
-b1.move_piece([0, 0], [4, 4])
-
-p b1[[0, 0]] # => nil
-p b1[[4, 4]] # => piece
+# b1.move_piece([0, 0], [4, 4])
+# # 
+# p b1[[0, 0]] # => nil
+# p b1[[4, 4]] # => piece
