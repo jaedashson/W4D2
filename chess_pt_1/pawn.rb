@@ -2,35 +2,6 @@ require_relative "board.rb"
 require_relative "piece.rb"
 
 class Pawn < Piece
-
-    # BLACK_MOVES = [
-    # [ 1,  0],
-    # ]
-
-    # BLACK_MOVES_FIRST = [
-    # [ 1,  0],
-    # [ 2,  0]
-    # ]
-
-    # WHITE_MOVES = [
-    # [-1,  0]
-    # ]
-
-    # WHITE_MOVES_FIRST = [
-    # [-1,  0],
-    # [-2,  0]
-    # ]
-
-    # BLACK_ATTACK = [
-    # [ 1, -1],
-    # [ 1,  1]
-    # ]
-    
-    # WHITE_ATTACK = [
-    # [ -1, -1],
-    # [ -1,  1]
-    # ]
-        
     def initialize(color, board, pos)
         super(color, board, pos)
     end
@@ -45,7 +16,6 @@ class Pawn < Piece
 
     private 
 
-    # pos = [row, col]
     def at_start_row
         pos[0] == (color == :black ? 1 : 6)
     end
@@ -54,9 +24,6 @@ class Pawn < Piece
         color == :black ? 1 : -1
     end
 
-    # Returns an array of positions that the pawn is able to go to
-    # Am I blocked?
-    # Use forward_dir as helper method
     def forward_steps
         forward_steps = []
 
@@ -64,21 +31,19 @@ class Pawn < Piece
         prop_move[0] += forward_dir
 
         
-        if board.valid_pos?(prop_move) && board[prop_move].symbol == :N # If position is valid and empty
+        if board.valid_pos?(prop_move) && board[prop_move].symbol == :O # If position is valid and empty
             forward_steps << prop_move
 
             if at_start_row
                 prop_move[0] += forward_dir
 
-                forward_steps << prop_move if board[prop_move].symbol == :N
+                forward_steps << prop_move if board[prop_move].symbol == :O
             end
         end
         
         forward_steps    
     end
 
-    # Returns a diagonal position if there is an enemy there
-    # Use forward_dir as helper method
     def side_attacks
         side_attacks = []
 

@@ -3,7 +3,6 @@ require_relative "piece.rb"
 require_relative "stepable.rb"
 
 class King < Piece
-
     include Stepable
 
     MOVES = [
@@ -21,14 +20,17 @@ class King < Piece
         super(color, board, pos)
     end
 
+    def symbol
+        :K
+    end
+
     protected
 
     def move_diffs
         MOVES
     end
-    
 end
 
-board = Board.new
-king = King.new(:white, board, [7,4])
-p king.moves
+# board = Board.new
+# king = King.new(:white, board, [7,4])
+# p king.moves

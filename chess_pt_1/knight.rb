@@ -27,8 +27,6 @@ class Knight < Piece
     def move_diffs
         MOVES
     end
-    
-    
 end
 
 # board = Board.new

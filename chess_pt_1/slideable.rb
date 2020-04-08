@@ -1,19 +1,19 @@
-
+require "byebug"
 
 module Slideable
     
     HORIZONTAL_DIRS = [
-    [ 1,  0],
-    [ 0,  1],
-    [-1,  0],
-    [ 0, -1]
+    [ 1,  0], # down
+    [ 0,  1], # right
+    [-1,  0], # up
+    [ 0, -1]  # left
     ]
 
     DIAGONAL_DIRS = [
-    [ 1,  1],
-    [-1,  1],
-    [-1, -1],
-    [ 1, -1]
+    [ 1,  1], # down-right
+    [-1,  1], # up-right
+    [-1, -1], # up-left
+    [ 1, -1]  # down-left
     ]
 
     def horizontal_dirs
@@ -24,21 +24,16 @@ module Slideable
         DIAGONAL_DIRS
     end
 
-    # Leave the same as in Stepable?
     def moves
+        # debugger # DEBUG
         moves = []
         cur_row, cur_col = pos
 
-        move_dirs.each do |(d_row, d_col)| # good up to here
-            # debugger
-            # within this loop, we need to add to add all the possible positions in the current direction
-            # call grow_unblocked
-
-            moves.concat(grow_unblocked_moves_in_dir(d_row, d_col)) # call this once per direction
+        move_dirs.each do |(d_row, d_col)|
+            moves.concat(grow_unblocked_moves_in_dir(d_col, d_row)) # call this once per direction
         end
 
         moves
-        # should return ALL POSSIBLE END POSITIONS
     end
 
     
@@ -47,32 +42,32 @@ module Slideable
         raise "#move_dirs was not overwritten by piece!"
     end
 
-    # How does this work?
-    # What does this return? => Return an array of all possible positions in that direction
     def grow_unblocked_moves_in_dir(dx, dy)
+        # debugger # Why doesn't debugger stop here?
         moves_in_dir = []
+
+        enemy_color = (color == :black ? :white : :black)
 
         cur_row, cur_col = pos
         
         keep_searching = true
 
         while keep_searching 
-            enemy_color = (color == :black ? :white : :black)
-            
             prop_move = [cur_row + dy, cur_col + dx]
-
-            if board.valid_pos?(prop)
-                if board[prop_move].color == color # encounter our own piece
+            # debugger
+            if board.valid_pos?(prop_move)
+                if board[prop_move].color == color # Encounter our own piece
                     keep_searching = false
-                
-                elsif board[prop_move].color == enemy_color # encounter enemy piece
+                elsif board[prop_move].color == enemy_color # Encounter enemy piece
                     moves_in_dir << prop_move
                     keep_searching = false
-                else # encounter blank space
+                else # Encounter blank space
                     moves_in_dir << prop_move
                     cur_row, cur_col = prop_move
                     keep_searching = true
                 end
+            else
+                keep_searching = false
             end
         end
 

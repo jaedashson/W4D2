@@ -8,11 +8,11 @@ class NullPiece < Piece
     
     def initialize
         @color = 'grey'
-        symbol = :N
+        @symbol = :O
     end
 
     def moves
-        raise "Can't move null piece"
+        raise "Can't move NullPiece!"
+        # Or return []
     end
-
 end

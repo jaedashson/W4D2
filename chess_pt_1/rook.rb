@@ -17,13 +17,13 @@ class Rook < Piece
 
     protected
     def move_dirs
-        horizontal_dirs # module method
+        horizontal_dirs
     end
 end
 
-board = Board.new 
-rook = Rook.new(:black, board, [2, 0])
-p rook.moves
+# board = Board.new 
+# rook = Rook.new(:black, board, [2, 0])
+# p rook.moves
 
 # rook starts at [2, 0]
 # 2,1 -> 2,7

@@ -16,7 +16,7 @@ class Queen < Piece
 
     protected
     def move_dirs
-        horizontal_dirs + diagonal_dirs # module method
+        horizontal_dirs + diagonal_dirs
     end
 end
     

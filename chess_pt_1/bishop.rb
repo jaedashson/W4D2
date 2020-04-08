@@ -3,7 +3,6 @@ require_relative "piece.rb"
 require_relative "slideable.rb"
 
 class Bishop < Piece
-
     include Slideable
     
     def initialize(color, board, pos)
@@ -15,8 +14,8 @@ class Bishop < Piece
     end
 
     protected
+
     def move_dirs
-        diagonal_dirs # module method
+        diagonal_dirs
     end
-    
 end

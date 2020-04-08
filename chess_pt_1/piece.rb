@@ -8,25 +8,24 @@ class Piece
         @pos = pos
     end
     
-    # Returns the symbol as a string
     def to_s
-        symbol
+        symbol.to_s
     end
 
     def symbol
         raise "#symbol was not overwritten in subclass"
     end
 
-    # What does this do?
     def empty?
-        
+        self.is_a?(NullPiece)
     end
 
     def valid_moves
-        board.valid_pos?(pos) # check if within board 
+        board.valid_pos?(pos)
     end
 
-    # Is this correct?
+    # When do we use this?
+    # Update the piece's position on the board after it's been moved on the board
     def pos=(val)
         possible_moves = valid_moves(pos)
 
@@ -37,6 +36,5 @@ class Piece
 
     def move_into_check?(end_pos)
     end
-    
 end
 
